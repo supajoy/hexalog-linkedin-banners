@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>hexalog · department headers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --violet:#7F47FB; --violet-2:#9466ff; --deep:#431B8D; --dark:#26124D;
+    --bg:#140A31; --panel:#1E1142; --panel-2:#251552;
+    --line:#2b1c57; --line-2:#3a2a6b;
+    --text:#F5F5FF; --muted:#9b93c4; --lav:#8B8DFF; --yellow:#FFD728;
+    --display:"Space Grotesk", system-ui, sans-serif;
+    --body:"Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --maxw: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; min-height: 100dvh; color: var(--text); font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(1100px 520px at 50% -120px, rgba(127,71,251,.28), transparent 70%),
+      repeating-linear-gradient(30deg,  rgba(127,71,251,.05) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(150deg, rgba(127,71,251,.05) 0 1px, transparent 1px 40px),
+      var(--bg);
+    background-attachment: fixed;
+  }
+
+  /* ---------- header ---------- */
+  header { max-width: var(--maxw); margin: 0 auto; padding: 40px 24px 8px; text-align: center; }
+  .brand { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 30px; }
+  .brand .mark { width: 26px; height: 26px; display: block; }
+  .brand .wm {
+    font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: .02em;
+    text-transform: uppercase; color: #fff;
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--lav);
+    margin: 0 0 12px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 700; letter-spacing: -.02em; line-height: 1.02;
+    font-size: clamp(32px, 6vw, 52px); margin: 0 0 14px; color: #fff;
+  }
+  .lede { margin: 0 auto; max-width: 480px; color: var(--muted); font-size: 16px; line-height: 1.55; }
+
+  /* ---------- gallery ---------- */
+  main { max-width: var(--maxw); margin: 0 auto; padding: 34px 24px 72px; }
+  .grid {
+    display: grid; gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    opacity: 0; transform: translateY(14px); animation: rise .5s ease forwards;
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--violet); box-shadow: 0 20px 40px -24px rgba(127,71,251,.8); }
+
+  .thumb {
+    position: relative; aspect-ratio: 4 / 1; overflow: hidden; cursor: zoom-in;
+    background: var(--panel-2); border: 0; padding: 0; width: 100%; display: block;
+  }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s ease; }
+  .card:hover .thumb img { transform: scale(1.045); }
+  .thumb .zoom {
+    position: absolute; top: 9px; right: 9px; width: 28px; height: 28px; border-radius: 8px;
+    display: grid; place-items: center; color: #fff;
+    background: rgba(20,10,49,.55); backdrop-filter: blur(4px); border: 1px solid rgba(139,141,255,.3);
+    opacity: 0; transform: translateY(-4px); transition: opacity .2s, transform .2s;
+  }
+  .card:hover .thumb .zoom, .thumb:focus-visible .zoom { opacity: 1; transform: none; }
+
+  .meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 14px 14px; }
+  .name { font-family: var(--display); font-weight: 600; font-size: 15.5px; letter-spacing: -.01em; color: #fff; }
+
+  .dl, .lb-dl {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    font-family: var(--body); font-weight: 600; font-size: 13px; color: #fff;
+    background: linear-gradient(180deg, var(--violet-2), var(--violet));
+    border: 1px solid var(--violet); border-radius: 10px; padding: 8px 13px;
+    box-shadow: 0 8px 20px -10px var(--violet); transition: filter .15s, transform .05s;
+    white-space: nowrap;
+  }
+  .dl:hover, .lb-dl:hover { filter: brightness(1.08); }
+  .dl:active, .lb-dl:active { transform: translateY(1px); }
+  .dl svg, .lb-dl svg { width: 15px; height: 15px; }
+
+  /* ---------- lightbox ---------- */
+  .lb {
+    position: fixed; inset: 0; z-index: 50; display: none;
+    align-items: center; justify-content: center; padding: 24px;
+    background: rgba(9,4,24,.86); backdrop-filter: blur(8px);
+  }
+  .lb.open { display: flex; animation: fade .2s ease; }
+  .lb-inner { width: min(1080px, 94vw); display: flex; flex-direction: column; gap: 16px; }
+  .lb img { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line-2); box-shadow: 0 40px 90px -40px #000; }
+  .lb-bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+  .lb-name { font-family: var(--display); font-weight: 600; font-size: 18px; color: #fff; }
+  .lb-close {
+    position: fixed; top: 18px; right: 20px; width: 42px; height: 42px; border-radius: 12px;
+    display: grid; place-items: center; cursor: pointer; color: #fff;
+    background: rgba(40,24,90,.6); border: 1px solid var(--line-2); font-size: 22px; line-height: 1;
+  }
+  .lb-close:hover { border-color: var(--violet); }
+
+  footer { text-align: center; color: var(--muted); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; padding: 0 24px 40px; }
+
+  :focus-visible { outline: 2px solid var(--lav); outline-offset: 3px; border-radius: 8px; }
+
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .card { animation: none; opacity: 1; transform: none; }
+    .card:hover { transform: none; }
+    .card:hover .thumb img { transform: none; }
+    .lb.open { animation: none; }
+    * { transition: none !important; }
+  }
+  @media (max-width: 560px) {
+    header { padding-top: 30px; }
+    .meta { flex-direction: column; align-items: stretch; }
+    .dl { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <path d="M16 3 28 10v12L16 29 4 22V10L16 3Z" fill="#7F47FB"/>
+      <path d="M16 3 28 10 16 17 4 10 16 3Z" fill="#9466ff"/>
+      <path d="M16 17 28 10v12L16 29V17Z" fill="#5b2fc9"/>
+      <path d="M16 17 4 10v12l12 7V17Z" fill="#6f3ee0"/>
+    </svg>
+    <span class="wm">hexalog</span>
+  </div>
+  <p class="eyebrow">LinkedIn headers</p>
+  <h1>Department Headers</h1>
+  <p class="lede">Find your team, preview the banner, and download it for your LinkedIn profile.</p>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>hexalog · internal tool</footer>
+
+<!-- lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Header preview">
+  <button class="lb-close" id="lbClose" aria-label="Close preview">×</button>
+  <div class="lb-inner">
+    <img id="lbImg" src="" alt="" />
+    <div class="lb-bar">
+      <span class="lb-name" id="lbName"></span>
+      <button class="lb-dl" id="lbDl">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        Download
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // department list — order matches the brand sheet. slug = file name in assets/headers/<slug>.png
+  const DEPARTMENTS = [
+    { name: "CEO's Office",          slug: "ceos-office" },
+    { name: "Brand & Marketing",     slug: "brand-marketing" },
+    { name: "Tech & Product",        slug: "tech-product" },
+    { name: "Custom & Compliance",   slug: "custom-compliance" },
+    { name: "Human Resources",       slug: "human-resources" },
+    { name: "Growth & Sales",        slug: "growth-sales" },
+    { name: "Customer Experience",   slug: "customer-experience" },
+    { name: "Operations",            slug: "operations" },
+    { name: "Supply & Pricing",      slug: "supply-pricing" },
+    { name: "Legal",                 slug: "legal" },
+    { name: "Finance",               slug: "finance" },
+    { name: "Admin & Procurement",   slug: "admin-procurement" },
+  ];
+
+  const PLACEHOLDER = "assets/placeholder.png";
+  const grid = document.getElementById('grid');
+
+  // download icon (shared)
+  const dlIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>';
+
+  DEPARTMENTS.forEach((d, i) => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.style.animationDelay = (i * 45) + 'ms';
+    card.innerHTML = `
+      <button class="thumb" aria-label="Preview ${d.name} header">
+        <img alt="${d.name} LinkedIn header" loading="lazy" />
+        <span class="zoom" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
+        </span>
+      </button>
+      <div class="meta">
+        <span class="name">${d.name}</span>
+        <button class="dl">${dlIcon} Download</button>
+      </div>`;
+
+    const img = card.querySelector('img');
+    // try the real header; fall back to the placeholder until real PNGs are dropped in
+    img.onerror = () => { img.onerror = null; img.src = PLACEHOLDER; };
+    img.src = `assets/headers/${d.slug}.png`;
+
+    card.querySelector('.thumb').addEventListener('click', () => openLightbox(d, img.src));
+    card.querySelector('.dl').addEventListener('click', () => downloadHeader(d, img.src));
+    grid.appendChild(card);
+  });
+
+  // ---- download (grabs whatever image is actually shown, names it per department) ----
+  async function downloadHeader(d, src) {
+    const filename = `hexalog-${d.slug}-linkedin-header.png`;
+    try {
+      const res = await fetch(src);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      // fallback if fetch is blocked (e.g. opened via file://) — open the image so it can be saved
+      const a = document.createElement('a');
+      a.href = src; a.download = filename; a.target = '_blank'; a.click();
+    }
+  }
+
+  // ---- lightbox ----
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lbImg');
+  const lbName = document.getElementById('lbName');
+  const lbDl = document.getElementById('lbDl');
+  let lastFocus = null;
+
+  function openLightbox(d, src) {
+    lastFocus = document.activeElement;
+    lbImg.src = src; lbImg.alt = d.name + ' LinkedIn header';
+    lbName.textContent = d.name;
+    lbDl.onclick = () => downloadHeader(d, src);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lbClose').focus();
+  }
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox(); });
+})();
+</script>
+</body>
+</html>
