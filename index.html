@@ -15,14 +15,15 @@
     --text:#F5F5FF; --muted:#9b93c4; --lav:#8B8DFF;
     --display:"Space Grotesk", system-ui, sans-serif;
     --body:"Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --maxw: 760px;
+    --maxw: 820px;
 
     /* LinkedIn mockup tokens */
     --li-card:#ffffff;
     --li-bg:#f4f2ee;
-    --li-text:#000000;
-    --li-text2:#666666;
+    --li-text:#000000e6;
+    --li-text2:#00000099;
     --li-link:#0a66c2;
+    --li-link-dark:#004182;
     --li-border:#e0dfdc;
     --li-banner-bg:#eef0f2;
   }
@@ -112,101 +113,97 @@
   }
 
   .li-avatar-wrap {
-    padding: 0 24px; position: relative; margin-top: -56px; z-index: 2;
-    display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 0 24px; position: relative; margin-top: -78px; z-index: 2;
   }
   .li-avatar {
-    width: 132px; height: 132px; border-radius: 50%; border: 4px solid var(--li-card);
-    background: #e7e5e1; position: relative; flex-shrink: 0; overflow: hidden; cursor: pointer;
+    width: 152px; height: 152px; border-radius: 50%; border: 4px solid var(--li-card);
+    background: linear-gradient(135deg, #f6c177, #e07a5f);
+    overflow: hidden; display: grid; place-items: center;
+    color: #fff; font-weight: 600; font-size: 56px; letter-spacing: -.02em;
+    box-shadow: 0 1px 0 rgba(0,0,0,.04);
   }
-  .li-avatar img { width: 100%; height: 100%; object-fit: cover; display: none; }
-  .li-avatar.has-img img { display: block; }
-  .li-avatar .ph {
-    position: absolute; inset: 0; display: grid; place-items: center; gap: 6px;
-    color: #8a8d92; font-size: 11px; text-align: center;
-  }
-  .li-avatar.has-img .ph { display: none; }
-  .li-avatar .ph svg { width: 28px; height: 28px; opacity: .65; }
-  .li-avatar .ph span { font-weight: 500; letter-spacing: .04em; }
+  .li-avatar span { user-select: none; }
 
-  .li-body { padding: 14px 24px 20px; }
+  .li-body { padding: 14px 24px 22px; }
+
+  .li-info-row { display: flex; gap: 28px; align-items: flex-start; }
+  .li-info-left { flex: 1; min-width: 0; }
+  .li-info-right { flex-shrink: 0; padding-top: 4px; display: flex; flex-direction: column; gap: 10px; max-width: 220px; }
+
   .li-name {
-    font-size: 22px; font-weight: 600; line-height: 1.2; outline: none;
-    min-height: 1.2em; color: var(--li-text);
+    font-size: 24px; font-weight: 600; line-height: 1.2;
+    display: inline-flex; align-items: baseline; gap: 6px; color: var(--li-text);
   }
-  .li-name:empty::before { content: attr(data-ph); color: #9aa0a6; font-weight: 500; }
+  .li-name .degree { font-size: 15px; font-weight: 400; color: var(--li-text2); }
+
   .li-headline {
-    font-size: 14px; color: var(--li-text); margin-top: 4px; line-height: 1.4; outline: none;
-    min-height: 1.4em;
+    font-size: 14px; color: var(--li-text); margin-top: 4px; line-height: 1.4;
   }
-  .li-headline:empty::before { content: attr(data-ph); color: #9aa0a6; }
 
   .li-meta { font-size: 13px; color: var(--li-text2); margin-top: 6px; line-height: 1.5; }
   .li-meta .li-link { color: var(--li-link); font-weight: 600; }
-  .li-meta .sep { padding: 0 2px; }
+  .li-meta .sep { padding: 0 4px; }
 
-  .li-followers { font-size: 13px; margin-top: 6px; color: var(--li-text2); }
-  .li-followers strong { color: var(--li-text); font-weight: 600; }
+  .li-connections { font-size: 13px; margin-top: 4px; color: var(--li-text2); }
+  .li-connections strong { color: var(--li-text); font-weight: 600; }
+  .li-connections .li-link { color: var(--li-link); font-weight: 600; }
 
-  .li-company {
-    display: inline-flex; align-items: center; gap: 8px; margin-top: 14px;
-    background: transparent;
+  .li-mutual { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; color: var(--li-text2); }
+  .li-mutual-avatars { display: flex; }
+  .li-mutual-avatars span {
+    width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--li-card);
+    display: inline-block; margin-right: -8px;
   }
-  .li-co-mark {
-    width: 28px; height: 28px; border-radius: 4px; background: var(--bg);
-    display: grid; place-items: center; overflow: hidden;
-  }
-  .li-co-mark img { width: 22px; height: 22px; object-fit: contain; }
-  .li-co-name { font-size: 13px; font-weight: 600; color: var(--li-text); }
+  .li-mutual-avatars span:nth-child(1) { background: linear-gradient(135deg,#c2956b,#7a5234); }
+  .li-mutual-avatars strong { color: var(--li-text); font-weight: 600; }
 
-  .li-btns { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  /* right-rail org/edu rows */
+  .li-org {
+    display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--li-text); font-weight: 600;
+  }
+  .li-org-mark {
+    width: 28px; height: 28px; border-radius: 4px; flex-shrink: 0;
+    display: grid; place-items: center; overflow: hidden; background: transparent;
+  }
+  .li-org-mark svg, .li-org-mark img { width: 100%; height: 100%; object-fit: contain; }
+  .li-org-name { line-height: 1.25; }
+
+  /* action buttons */
+  .li-btns { display: flex; gap: 8px; margin-top: 18px; align-items: center; flex-wrap: wrap; }
   .li-btn {
     display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 16px;
-    border-radius: 16px; font-size: 14px; font-weight: 600; cursor: default; border: 1px solid transparent;
-    font-family: inherit;
+    border-radius: 16px; font-size: 14px; font-weight: 600; cursor: default;
+    border: 1.5px solid transparent; font-family: inherit; line-height: 1;
   }
-  .li-btn.primary { background: var(--li-link); color: #fff; }
-  .li-btn.ghost { background: transparent; color: var(--li-link); border-color: var(--li-link); }
-  .li-btn.outline { background: transparent; color: var(--li-text2); border-color: var(--li-text2); }
+  .li-btn svg { width: 16px; height: 16px; }
+  .li-btn.primary { background: var(--li-link); color: #fff; padding: 0 14px 0 12px; }
+  .li-btn.primary svg { fill: #fff; }
+  .li-btn.ghost { background: transparent; color: var(--li-link); border-color: var(--li-link); padding: 0 14px 0 12px; }
+  .li-btn.ghost svg { fill: var(--li-link); }
   .li-btn-more {
     width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--li-text2);
     display: grid; place-items: center; cursor: default; color: var(--li-text2);
+    background: transparent;
   }
+  .li-btn-more svg { width: 18px; height: 18px; fill: var(--li-text2); }
 
-  /* contenteditable focus */
-  [contenteditable="true"]:focus {
-    background: rgba(10,102,194,.07); border-radius: 4px;
-    box-shadow: 0 0 0 2px rgba(10,102,194,.25);
-  }
-
-  /* edit hint pill above mockup */
-  .hint {
-    text-align: center; font-size: 12px; color: var(--muted); margin: 14px 0 0;
-    letter-spacing: .04em;
-  }
-  .hint kbd {
-    font-family: var(--body); background: var(--panel); border: 1px solid var(--line);
-    border-radius: 6px; padding: 2px 7px; color: var(--lav); font-size: 11px;
-  }
-
-  /* hidden file input */
-  .file-hidden { position: absolute; left: -9999px; width: 1px; height: 1px; }
-
-  footer { text-align: center; padding: 8px 24px 48px; }
+  footer { text-align: center; padding: 18px 24px 48px; }
   .footlogo { width: 200px; max-width: 60%; height: auto; display: inline-block; opacity: .85; }
 
   :focus-visible { outline: 2px solid var(--lav); outline-offset: 3px; border-radius: 8px; }
 
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     header { padding-top: 28px; }
     .toolbar { padding: 10px; }
     .tb-left { width: 100%; }
     .dl { width: 100%; justify-content: center; }
     .li-shell { padding: 10px; }
-    .li-avatar { width: 104px; height: 104px; }
-    .li-avatar-wrap { margin-top: -44px; padding: 0 16px; }
-    .li-body { padding: 12px 16px 18px; }
-    .li-name { font-size: 19px; }
+    .li-avatar { width: 112px; height: 112px; font-size: 42px; }
+    .li-avatar-wrap { margin-top: -60px; padding: 0 16px; }
+    .li-body { padding: 12px 16px 20px; }
+    .li-name { font-size: 20px; }
+    .li-info-row { flex-direction: column; gap: 14px; }
+    .li-info-right { padding-top: 0; max-width: none; }
   }
 </style>
 </head>
@@ -241,46 +238,67 @@
       </div>
 
       <div class="li-avatar-wrap">
-        <div class="li-avatar" id="avatar" role="button" tabindex="0" aria-label="Upload profile photo">
-          <img id="avatarImg" alt="" />
-          <div class="ph">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
-            <span>add photo</span>
-          </div>
-        </div>
+        <div class="li-avatar" aria-hidden="true"><span>AS</span></div>
       </div>
 
       <div class="li-body">
-        <div class="li-name" contenteditable="true" data-ph="Your name" id="name"></div>
-        <div class="li-headline" contenteditable="true" data-ph="Your role at Hexalog" id="headline"></div>
+        <div class="li-info-row">
+          <div class="li-info-left">
+            <div class="li-name">
+              Aarav Sharma
+              <span class="degree">· 2nd</span>
+            </div>
+            <div class="li-headline">Senior Manager at Hexalog · Simplify | Supply | Succeed</div>
+            <div class="li-meta">
+              Mumbai, Maharashtra, India
+              <span class="sep">·</span>
+              <span class="li-link">Contact info</span>
+            </div>
+            <div class="li-connections">
+              <strong>500+</strong> connections
+            </div>
+            <div class="li-mutual">
+              <div class="li-mutual-avatars"><span></span></div>
+              <span><strong>Ananya</strong> is a mutual connection</span>
+            </div>
+          </div>
 
-        <div class="li-meta">
-          <span id="locLabel">India</span>
-          <span class="sep">·</span>
-          <span class="li-link">Contact info</span>
-        </div>
-
-        <div class="li-followers">
-          <strong>500+</strong> connections
-        </div>
-
-        <div class="li-company">
-          <div class="li-co-mark"><img src="assets/logo-mark.png" alt="" onerror="this.style.display='none'" /></div>
-          <span class="li-co-name">Hexalog</span>
+          <div class="li-info-right">
+            <div class="li-org">
+              <div class="li-org-mark">
+                <!-- hexalog hex mark in brand violet -->
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="hex" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                      <stop offset="0" stop-color="#9466ff"/><stop offset="1" stop-color="#431B8D"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="url(#hex)"/>
+                  <path d="M32 4 L56 18 L32 32 L8 18 Z" fill="#7F47FB" opacity=".85"/>
+                  <path d="M8 18 L32 32 V60 L8 46 Z" fill="#26124D" opacity=".7"/>
+                </svg>
+              </div>
+              <span class="li-org-name">Hexalog</span>
+            </div>
+          </div>
         </div>
 
         <div class="li-btns">
-          <button class="li-btn primary">+ Follow</button>
-          <button class="li-btn ghost">Message</button>
-          <button class="li-btn outline">More</button>
+          <button class="li-btn primary" type="button" aria-label="Connect">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 8c1.66 0 3-1.57 3-3.5S10.66 1 9 1 6 2.57 6 4.5 7.34 8 9 8zM4.5 9V7H3v2H1v1.5h2v2h1.5v-2h2V9h-2zM9 9c-2.21 0-6 1.06-6 3.5V14h7.34a4 4 0 0 1-.34-1.5c0-1.18.51-2.25 1.32-3A12 12 0 0 0 9 9z"/></svg>
+            Connect
+          </button>
+          <button class="li-btn ghost" type="button" aria-label="Message">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.5 1.5 1 7l5 1.5L7.5 14l7-12.5z"/></svg>
+            Message
+          </button>
+          <button class="li-btn-more" type="button" aria-label="More">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg>
+          </button>
         </div>
       </div>
     </div>
   </div>
-
-  <p class="hint">click <kbd>name</kbd>, <kbd>headline</kbd>, or the <kbd>avatar</kbd> to personalize · this is a preview only, nothing is saved</p>
-
-  <input type="file" id="fileInput" accept="image/*" class="file-hidden" />
 </main>
 
 <footer><img class="footlogo" src="assets/logo.png" alt="hexalog — simplify · supply · succeed" /></footer>
@@ -310,7 +328,6 @@
   let currentDept = null;
   let currentSrc = null;
 
-  // populate dropdown
   DEPARTMENTS.forEach(d => {
     const opt = document.createElement('option');
     opt.value = d.slug; opt.textContent = d.name;
@@ -337,7 +354,6 @@
     dlBtn.style.pointerEvents = '';
   });
 
-  // download current banner
   dlBtn.addEventListener('click', async () => {
     if (!currentDept || !currentSrc) return;
     const filename = `hexalog-${currentDept.slug}-linkedin-header.png`;
@@ -352,34 +368,6 @@
       const a = document.createElement('a');
       a.href = currentSrc; a.download = filename; a.target = '_blank'; a.click();
     }
-  });
-
-  // avatar upload
-  const avatar = document.getElementById('avatar');
-  const avatarImg = document.getElementById('avatarImg');
-  const fileInput = document.getElementById('fileInput');
-
-  avatar.addEventListener('click', () => fileInput.click());
-  avatar.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
-  });
-  fileInput.addEventListener('change', e => {
-    const file = e.target.files && e.target.files[0];
-    if (!file) return;
-    const url = URL.createObjectURL(file);
-    avatarImg.src = url;
-    avatar.classList.add('has-img');
-  });
-
-  // contenteditable: strip line breaks on enter, sanitize paste
-  ['name','headline'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
-    el.addEventListener('paste', e => {
-      e.preventDefault();
-      const text = (e.clipboardData || window.clipboardData).getData('text');
-      document.execCommand('insertText', false, text);
-    });
   });
 })();
 </script>
